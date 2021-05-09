@@ -1,0 +1,66 @@
+{% extends "common/l_sidebar.html" %}
+{% load static %}
+{% load param_change %}
+
+{% block page_title %}EC site{% endblock %}
+{% block head %}
+{{ block.super }}
+
+<link rel="stylesheet" href="{% static 'shopping/css/style.css' %}">
+
+{% endblock %}
+
+{% block header_title %}EC site{% endblock %}
+
+{% block left_header_content %}
+
+<div style="width:80%;text-align:right;">
+    <form action="" method="GET">
+        <input type="text" name="search" value="{{ request.GET.search }}" placeholder="キーワード検索">
+        <input type="submit" value="検索">
+    </form>
+</div>
+{% endblock %}
+
+{% block sidebar_content %}{% endblock %}
+
+{% block main  %}
+<main class="container">
+
+
+<div class="row">
+{% for content in data %}
+    <div class="col-sm-3 border my-2">
+        <div>{{ content.name }}</div>
+        <div>カテゴリ:{{ content.category }}</div>
+        <div>{{ content.price }}円</div>
+        <div class="text-center my-1">
+            <input type="button" value="カゴに入れる">
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+
+<!--
+ページネーションはテンプレートタグを拡張する方向で持っていく。
+https://stackoverflow.com/questions/2047622/how-to-paginate-django-with-other-get-variables
+-->
+
+
+{% generate_pagelink request "page" "1" data.paginator.num_pages data.number %}
+
+
+
+
+
+
+
+
+     
+</main>
+{% endblock %}
+
+
+
+
